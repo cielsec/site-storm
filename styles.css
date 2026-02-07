@@ -371,6 +371,15 @@ body.cursor-hidden .cursor-ring {
   display: block;
 }
 
+.project-meta {
+  margin-top: 12px;
+  color: var(--neon-soft);
+  font-family: "Share Tech Mono", monospace;
+  letter-spacing: 0.12rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
 .project-frame {
   border: 1px solid rgba(0, 255, 153, 0.4);
   border-radius: 12px;

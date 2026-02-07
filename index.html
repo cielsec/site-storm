@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#050707" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="Storm Central: hub para operações, pesquisa e engenharia." />
+  <meta name="description" content="Storm Central: painel para operações e projetos." />
   <title>Storm Central</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,30 +17,36 @@
 </head>
 
 <body>
+  <!-- Camadas de fundo -->
   <div class="bg" aria-hidden="true"></div>
   <div class="grid" aria-hidden="true"></div>
   <div class="glow" aria-hidden="true"></div>
   <div class="scanlines" aria-hidden="true"></div>
 
+  <!-- Cursor custom -->
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
+  <!-- Overlay de transição -->
+  <div class="transition-wipe" aria-hidden="true"></div>
+
   <a class="skip" href="#hub">Pular para o painel</a>
 
-  <main class="shell" id="app" data-app>
+  <main class="shell" id="app">
     <!-- HERO / TERMINAL -->
     <section class="screen hero-screen is-active" id="hero" data-screen="hero" aria-label="Tela inicial">
-      <div class="hero-core hero-terminal">
-        <div class="terminal-window" role="region" aria-label="Terminal de inicialização">
+      <div class="hero-wrap">
+        <div class="terminal-window" role="region" aria-label="Terminal">
           <div class="terminal-bar" aria-hidden="true">
             <span class="dot red"></span>
             <span class="dot yellow"></span>
             <span class="dot green"></span>
             <span class="terminal-title">ciel@stormcentral: ~</span>
+            <span class="terminal-right">tty1</span>
           </div>
 
           <div class="terminal-body">
-            <!-- watermark logo -->
+            <!-- Logo watermark (menor) -->
             <div class="terminal-watermark" aria-hidden="true">
               <svg viewBox="0 0 160 160">
                 <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
@@ -49,9 +55,11 @@
               </svg>
             </div>
 
+            <!-- Linhas do boot -->
             <div class="terminal-lines" id="boot-lines" aria-live="polite"></div>
 
-            <div class="terminal-footer">
+            <!-- Linha atual (digitando) -->
+            <div class="terminal-current" id="boot-current" aria-hidden="true">
               <span class="cursor" aria-hidden="true"></span>
             </div>
           </div>
@@ -64,21 +72,19 @@
         </div>
 
         <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
+
+        <noscript>
+          <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
+        </noscript>
       </div>
-
-      <div class="transition-wipe" aria-hidden="true"></div>
-
-      <noscript>
-        <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
-      </noscript>
     </section>
 
     <!-- HUB -->
     <section class="screen hub-screen" id="hub" data-screen="hub" aria-label="Painel" aria-hidden="true" tabindex="-1">
       <header class="hub-header">
         <div class="hub-head">
-          <p class="eyebrow">Painel Central</p>
-          <h2>Operações, pesquisa e inteligência.</h2>
+          <p class="eyebrow">Painel</p>
+          <h2>Operações, anotações e projetos.</h2>
         </div>
 
         <div class="hub-line" aria-hidden="true"></div>
@@ -96,65 +102,65 @@
           <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-ferramentas" id="tab-ferramentas" data-panel="ferramentas">
             <span class="icon" aria-hidden="true">⌁</span> Ferramentas
           </button>
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-artigos" id="tab-artigos" data-panel="artigos">
-            <span class="icon" aria-hidden="true">⌬</span> Artigos
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-notas" id="tab-notas" data-panel="notas">
+            <span class="icon" aria-hidden="true">⌬</span> Notas
           </button>
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-suporte" id="tab-suporte" data-panel="suporte">
-            <span class="icon" aria-hidden="true">◇</span> Suporte
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-contato" id="tab-contato" data-panel="contato">
+            <span class="icon" aria-hidden="true">◇</span> Contato
           </button>
           <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-projetos" id="tab-projetos" data-panel="projetos">
             <span class="icon" aria-hidden="true">⬡</span> Projetos
           </button>
         </nav>
 
-        <div class="hub-panels" role="region" aria-label="Conteúdo da seção">
+        <div class="hub-panels" role="region" aria-label="Conteúdo">
           <article class="hub-panel is-active" role="tabpanel" tabindex="0" id="panel-grupo" aria-labelledby="tab-grupo" data-panel-id="grupo">
             <h3>Grupo</h3>
-            <p>Núcleo voltado a pesquisa, laboratório e validação.</p>
+            <p>Laboratório + execução + evidência.</p>
             <ul>
-              <li>Rotina de testes e evidências.</li>
-              <li>Documentação técnica interna.</li>
-              <li>Monitoramento de superfícies críticas.</li>
+              <li>Metodologia e rotina de testes.</li>
+              <li>Checklist de verificação.</li>
+              <li>Registro e rastreio.</li>
             </ul>
           </article>
 
           <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-ferramentas" aria-labelledby="tab-ferramentas" data-panel-id="ferramentas" hidden>
             <h3>Ferramentas</h3>
-            <p>Conjunto de scripts utilitários e automação.</p>
+            <p>Scripts utilitários para fluxo e produtividade.</p>
             <ul>
-              <li>Enumeração e coleta.</li>
-              <li>Triagem e priorização.</li>
-              <li>Playbooks e logs.</li>
+              <li>Recon e enumeração.</li>
+              <li>Automação de tarefas.</li>
+              <li>Logs e organização.</li>
             </ul>
           </article>
 
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-artigos" aria-labelledby="tab-artigos" data-panel-id="artigos" hidden>
-            <h3>Artigos</h3>
-            <p>Notas técnicas, estudos e guias.</p>
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-notas" aria-labelledby="tab-notas" data-panel-id="notas" hidden>
+            <h3>Notas</h3>
+            <p>Documentação curta e direta.</p>
             <ul>
-              <li>Casos e lições.</li>
-              <li>Arquitetura e hardening.</li>
-              <li>Análise rápida.</li>
+              <li>Aprendizados.</li>
+              <li>Checkpoints.</li>
+              <li>Padronização.</li>
             </ul>
           </article>
 
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-suporte" aria-labelledby="tab-suporte" data-panel-id="suporte" hidden>
-            <h3>Suporte</h3>
-            <p>Canal direto para coordenação e triagem.</p>
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-contato" aria-labelledby="tab-contato" data-panel-id="contato" hidden>
+            <h3>Contato</h3>
+            <p>Canal para coordenação.</p>
             <ul>
-              <li>Onboarding.</li>
-              <li>Resposta assistida.</li>
-              <li>Treinamento.</li>
+              <li>Briefing</li>
+              <li>Triagem</li>
+              <li>Entrega</li>
             </ul>
           </article>
 
           <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-projetos" aria-labelledby="tab-projetos" data-panel-id="projetos" hidden>
             <h3>Projetos</h3>
-            <p>Lista de scripts e projetos ativos.</p>
+            <p>Lista de scripts.</p>
             <ul>
-              <li>Ferramentas internas.</li>
-              <li>Utilitários.</li>
-              <li>Laboratório.</li>
+              <li>Organização por propósito.</li>
+              <li>Descrição curta e objetiva.</li>
+              <li>Autor fixo.</li>
             </ul>
           </article>
         </div>
@@ -173,7 +179,7 @@
               <p>Interface que executa SQLmap e mostra saída em tempo real.</p>
             </header>
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar</summary>
+              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
               <div class="project-body">
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
@@ -186,7 +192,7 @@
               <p>Centraliza execuções e organiza logs.</p>
             </header>
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar</summary>
+              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
               <div class="project-body">
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
@@ -199,7 +205,7 @@
               <p>Automação de enumeração e organização de resultados.</p>
             </header>
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar</summary>
+              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
               <div class="project-body">
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
@@ -212,7 +218,7 @@
               <p>Coleta informações do host e organiza saída.</p>
             </header>
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar</summary>
+              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
               <div class="project-body">
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
@@ -225,7 +231,7 @@
               <p>Detecção e enumeração de WebDAV.</p>
             </header>
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar</summary>
+              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
               <div class="project-body">
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>

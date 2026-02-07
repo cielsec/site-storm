@@ -40,7 +40,8 @@ body{
 }
 
 .bg{
-  background:
+  background-color: var(--bg0);
+  background-image:
     radial-gradient(820px 540px at 16% 18%, rgba(159,91,255,.22), transparent 60%),
     radial-gradient(920px 640px at 86% 12%, rgba(35,242,198,.12), transparent 58%),
     radial-gradient(760px 580px at 64% 92%, rgba(46,203,255,.12), transparent 64%),

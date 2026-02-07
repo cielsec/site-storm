@@ -30,51 +30,47 @@
   <main class="shell" id="app" data-app>
     <!-- HERO / TERMINAL -->
     <section class="screen hero-screen is-active" id="hero" data-screen="hero" aria-label="Tela inicial">
-  <div class="hero-core hero-terminal">
-    <div class="terminal-window" role="region" aria-label="Terminal de inicialização">
-      <div class="terminal-bar" aria-hidden="true">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-        <span class="terminal-title">ciel@stormcentral: ~</span>
-      </div>
+      <div class="hero-core hero-terminal">
+        <div class="terminal-window" role="region" aria-label="Terminal de inicialização">
+          <div class="terminal-bar" aria-hidden="true">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">ciel@stormcentral: ~</span>
+          </div>
 
-      <div class="terminal-body">
-        <!-- watermark logo -->
-        <div class="terminal-watermark" aria-hidden="true">
-          <svg viewBox="0 0 160 160">
-            <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
-            <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
-            <line x1="80" y1="28" x2="80" y2="132" />
-          </svg>
+          <div class="terminal-body">
+            <!-- watermark logo -->
+            <div class="terminal-watermark" aria-hidden="true">
+              <svg viewBox="0 0 160 160">
+                <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
+                <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
+                <line x1="80" y1="28" x2="80" y2="132" />
+              </svg>
+            </div>
+
+            <div class="terminal-lines" id="boot-lines" aria-live="polite"></div>
+
+            <div class="terminal-footer">
+              <span class="cursor" aria-hidden="true"></span>
+            </div>
+          </div>
         </div>
 
-        <div class="terminal-lines" id="boot-lines" aria-live="polite"></div>
-
-        <div class="terminal-footer">
-          <span class="cursor" aria-hidden="true"></span>
+        <div class="hero-actions hero-actions-hidden" id="hero-actions">
+          <button class="btn btn-primary" id="enter-btn" type="button" aria-controls="hub" aria-expanded="false">
+            ENTRAR
+          </button>
         </div>
+
+        <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
       </div>
-    </div>
 
-    <div class="hero-actions hero-actions-hidden" id="hero-actions">
-      <button class="btn btn-primary" id="enter-btn" type="button" data-action="enter" aria-controls="hub" aria-expanded="false">
-        ENTRAR
-      </button>
-    </div>
+      <div class="transition-wipe" aria-hidden="true"></div>
 
-    <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
-  </div>
-
-  <!-- overlay de transição -->
-  <div class="transition-wipe" aria-hidden="true"></div>
-</section>
-
-
-        <noscript>
-          <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
-        </noscript>
-      </div>
+      <noscript>
+        <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
+      </noscript>
     </section>
 
     <!-- HUB -->
@@ -176,7 +172,6 @@
               <h3>havijpy_sqlmap_gui.py</h3>
               <p>Interface que executa SQLmap e mostra saída em tempo real.</p>
             </header>
-
             <details class="project-details">
               <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
@@ -190,7 +185,6 @@
               <h3>pentest_central.py</h3>
               <p>Centraliza execuções e organiza logs.</p>
             </header>
-
             <details class="project-details">
               <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
@@ -204,7 +198,6 @@
               <h3>recon_automation.sh</h3>
               <p>Automação de enumeração e organização de resultados.</p>
             </header>
-
             <details class="project-details">
               <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
@@ -218,7 +211,6 @@
               <h3>privesc_pack.sh</h3>
               <p>Coleta informações do host e organiza saída.</p>
             </header>
-
             <details class="project-details">
               <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
@@ -232,7 +224,6 @@
               <h3>ciel.pl</h3>
               <p>Detecção e enumeração de WebDAV.</p>
             </header>
-
             <details class="project-details">
               <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">

@@ -38,8 +38,8 @@
     currentX += (targetX - currentX) * 0.15;
     currentY += (targetY - currentY) * 0.15;
 
-    if (cursor) cursor.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    if (cursorBlur) cursorBlur.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    if (cursor) cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+    if (cursorBlur) cursorBlur.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
     if (spotlight) {
       spotlight.style.setProperty("--mx", `${currentX}px`);
       spotlight.style.setProperty("--my", `${currentY}px`);

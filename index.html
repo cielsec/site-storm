@@ -17,22 +17,21 @@
 </head>
 
 <body>
-  <!-- Background layers -->
+  <!-- fundos -->
   <div class="bg" aria-hidden="true"></div>
   <div class="grid" aria-hidden="true"></div>
   <div class="glow" aria-hidden="true"></div>
   <div class="scanlines" aria-hidden="true"></div>
 
-  <!-- Cursor -->
+  <!-- cursor -->
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
   <a class="skip" href="#hub">Pular para o painel</a>
 
-  <main class="shell" id="app" data-app>
-
+  <main class="shell" id="app">
     <!-- HERO / TERMINAL -->
-    <section class="screen hero-screen is-active" id="hero" data-screen="hero" aria-label="Tela inicial">
+    <section class="screen hero-screen is-active" id="hero" aria-label="Tela inicial">
       <div class="hero-core hero-terminal">
         <div class="terminal-window" role="region" aria-label="Terminal de inicialização">
           <div class="terminal-bar" aria-hidden="true">
@@ -43,8 +42,8 @@
           </div>
 
           <div class="terminal-body">
-            <!-- watermark logo (menor) -->
-            <div class="terminal-watermark terminal-watermark-sm" aria-hidden="true">
+            <!-- watermark (logo fundo) -->
+            <div class="terminal-watermark" aria-hidden="true">
               <svg viewBox="0 0 160 160">
                 <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
                 <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
@@ -52,17 +51,16 @@
               </svg>
             </div>
 
-            <!-- linhas do boot (JS escreve aqui) -->
             <div class="terminal-lines" id="boot-lines" aria-live="polite"></div>
 
             <div class="terminal-footer">
-              <span class="cursor" aria-hidden="true"></span>
+              <span class="term-cursor" aria-hidden="true"></span>
             </div>
           </div>
         </div>
 
         <div class="hero-actions hero-actions-hidden" id="hero-actions">
-          <button class="btn btn-primary" id="enter-btn" type="button" data-action="enter" aria-controls="hub" aria-expanded="false">
+          <button class="btn btn-primary" id="enter-btn" type="button" aria-controls="hub" aria-expanded="false">
             ENTRAR
           </button>
         </div>
@@ -70,7 +68,7 @@
         <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
       </div>
 
-      <!-- overlay de transição -->
+      <!-- overlay transição -->
       <div class="transition-wipe" aria-hidden="true"></div>
 
       <noscript>
@@ -79,7 +77,7 @@
     </section>
 
     <!-- HUB -->
-    <section class="screen hub-screen" id="hub" data-screen="hub" aria-label="Painel" aria-hidden="true" tabindex="-1">
+    <section class="screen hub-screen" id="hub" aria-label="Painel" aria-hidden="true" tabindex="-1">
       <header class="hub-header">
         <div class="hub-head">
           <p class="eyebrow">Painel Central</p>
@@ -95,49 +93,57 @@
 
       <div class="hub-layout">
         <nav class="hub-menu" aria-label="Seções" role="tablist">
-          <button class="hub-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-grupo" id="tab-grupo" data-panel="grupo">
+          <button class="hub-btn is-active" type="button" role="tab" aria-selected="true"
+            aria-controls="panel-grupo" id="tab-grupo" data-panel="grupo">
             <span class="icon" aria-hidden="true">◎</span> Grupo
           </button>
 
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-ferramentas" id="tab-ferramentas" data-panel="ferramentas">
+          <button class="hub-btn" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-ferramentas" id="tab-ferramentas" data-panel="ferramentas">
             <span class="icon" aria-hidden="true">⌁</span> Ferramentas
           </button>
 
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-artigos" id="tab-artigos" data-panel="artigos">
+          <button class="hub-btn" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-artigos" id="tab-artigos" data-panel="artigos">
             <span class="icon" aria-hidden="true">⌬</span> Artigos
           </button>
 
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-suporte" id="tab-suporte" data-panel="suporte">
+          <button class="hub-btn" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-suporte" id="tab-suporte" data-panel="suporte">
             <span class="icon" aria-hidden="true">◇</span> Suporte
           </button>
 
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-projetos" id="tab-projetos" data-panel="projetos">
+          <button class="hub-btn" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-projetos" id="tab-projetos" data-panel="projetos">
             <span class="icon" aria-hidden="true">⬡</span> Projetos
           </button>
         </nav>
 
         <div class="hub-panels" role="region" aria-label="Conteúdo da seção">
-          <article class="hub-panel is-active" role="tabpanel" tabindex="0" id="panel-grupo" aria-labelledby="tab-grupo" data-panel-id="grupo">
+          <article class="hub-panel is-active" role="tabpanel" tabindex="0"
+            id="panel-grupo" aria-labelledby="tab-grupo" data-panel-id="grupo">
             <h3>Grupo</h3>
             <p>Núcleo voltado a pesquisa, laboratório e validação.</p>
             <ul>
               <li>Rotina de testes e evidências.</li>
-              <li>Documentação técnica interna.</li>
+              <li>Documentação técnica.</li>
               <li>Monitoramento de superfícies críticas.</li>
             </ul>
           </article>
 
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-ferramentas" aria-labelledby="tab-ferramentas" data-panel-id="ferramentas" hidden>
+          <article class="hub-panel" role="tabpanel" tabindex="0" hidden
+            id="panel-ferramentas" aria-labelledby="tab-ferramentas" data-panel-id="ferramentas">
             <h3>Ferramentas</h3>
             <p>Conjunto de scripts utilitários e automação.</p>
             <ul>
               <li>Enumeração e coleta.</li>
               <li>Triagem e priorização.</li>
-              <li>Playbooks e logs.</li>
+              <li>Logs organizados.</li>
             </ul>
           </article>
 
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-artigos" aria-labelledby="tab-artigos" data-panel-id="artigos" hidden>
+          <article class="hub-panel" role="tabpanel" tabindex="0" hidden
+            id="panel-artigos" aria-labelledby="tab-artigos" data-panel-id="artigos">
             <h3>Artigos</h3>
             <p>Notas técnicas, estudos e guias.</p>
             <ul>
@@ -147,7 +153,8 @@
             </ul>
           </article>
 
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-suporte" aria-labelledby="tab-suporte" data-panel-id="suporte" hidden>
+          <article class="hub-panel" role="tabpanel" tabindex="0" hidden
+            id="panel-suporte" aria-labelledby="tab-suporte" data-panel-id="suporte">
             <h3>Suporte</h3>
             <p>Canal direto para coordenação e triagem.</p>
             <ul>
@@ -157,156 +164,402 @@
             </ul>
           </article>
 
-          <!-- ABA PROJETOS (com “Ler mais” + drop panel) -->
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-projetos" aria-labelledby="tab-projetos" data-panel-id="projetos" hidden>
+          <!-- PROJETOS (com drop + copiar) -->
+          <article class="hub-panel" role="tabpanel" tabindex="0" hidden
+            id="panel-projetos" aria-labelledby="tab-projetos" data-panel-id="projetos">
+
             <header class="projects-header">
               <p class="eyebrow">Projetos</p>
-              <h2>Scripts</h2>
+              <h3>Scripts</h3>
             </header>
 
             <div class="projects-grid">
-
-              <!-- Card 1 -->
-              <article class="project-card"
-                data-project-id="havijpy"
-                data-title="havijpy_sqlmap_gui.py"
-                data-desc="Interface em PyQt que executa SQLmap e mostra saída em tempo real."
-                data-author="Ciel Sec"
-                data-src="code/havijpy_sqlmap_gui.py">
+              <!-- 1 -->
+              <article class="project-card" data-project="havijpy">
                 <header class="project-head">
-                  <h3>havijpy_sqlmap_gui.py</h3>
-                  <p>Interface em PyQt que executa SQLmap e mostra saída em tempo real.</p>
+                  <h4>havijpy_sqlmap_gui.py</h4>
+                  <p>Interface que executa SQLmap e mostra saída em tempo real.</p>
                 </header>
+
                 <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
-                    Ler mais
-                  </button>
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="havijpy">Ler mais</button>
+                </div>
+
+                <div class="project-drop" id="drop-havijpy" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <p class="drop-label">Nome da script:</p>
+                        <p class="drop-value">havijpy_sqlmap_gui.py</p>
+                      </div>
+                      <div class="drop-meta">
+                        <p class="drop-label">Autor:</p>
+                        <p class="drop-value">Ciel Sec</p>
+                      </div>
+                    </div>
+
+                    <p class="drop-label">Descrição:</p>
+                    <p class="drop-desc">GUI em PyQt para rodar SQLmap com logs em tempo real e parâmetros personalizados.</p>
+
+                    <div class="drop-codebar">
+                      <span class="drop-label">Código:</span>
+                      <button class="btn btn-primary copy-btn" type="button" data-copy="#code-havijpy">Copiar</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-havijpy" data-template="tpl-havijpy"></code></pre>
+                  </div>
                 </div>
               </article>
 
-              <!-- Card 2 -->
-              <article class="project-card"
-                data-project-id="pentest"
-                data-title="pentest_central.py"
-                data-desc="Orquestra ferramentas e salva logs por execução."
-                data-author="Ciel Sec"
-                data-src="code/pentest_central.py">
+              <!-- 2 -->
+              <article class="project-card" data-project="pentestcentral">
                 <header class="project-head">
-                  <h3>pentest_central.py</h3>
-                  <p>Orquestra ferramentas e salva logs por execução.</p>
+                  <h4>pentest_central.py</h4>
+                  <p>Centraliza execuções e organiza logs por operação.</p>
                 </header>
+
                 <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
-                    Ler mais
-                  </button>
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="pentestcentral">Ler mais</button>
+                </div>
+
+                <div class="project-drop" id="drop-pentestcentral" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <p class="drop-label">Nome da script:</p>
+                        <p class="drop-value">pentest_central.py</p>
+                      </div>
+                      <div class="drop-meta">
+                        <p class="drop-label">Autor:</p>
+                        <p class="drop-value">Ciel Sec</p>
+                      </div>
+                    </div>
+
+                    <p class="drop-label">Descrição:</p>
+                    <p class="drop-desc">Orquestra ferramentas e salva saída em logs com timestamp.</p>
+
+                    <div class="drop-codebar">
+                      <span class="drop-label">Código:</span>
+                      <button class="btn btn-primary copy-btn" type="button" data-copy="#code-pentestcentral">Copiar</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-pentestcentral" data-template="tpl-pentestcentral"></code></pre>
+                  </div>
                 </div>
               </article>
 
-              <!-- Card 3 -->
-              <article class="project-card"
-                data-project-id="recon"
-                data-title="recon_automation.sh"
-                data-desc="Automação de enumeração e organização de resultados."
-                data-author="Ciel Sec"
-                data-src="code/recon_automation.sh">
+              <!-- 3 -->
+              <article class="project-card" data-project="recon">
                 <header class="project-head">
-                  <h3>recon_automation.sh</h3>
+                  <h4>recon_automation.sh</h4>
                   <p>Automação de enumeração e organização de resultados.</p>
                 </header>
+
                 <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
-                    Ler mais
-                  </button>
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="recon">Ler mais</button>
+                </div>
+
+                <div class="project-drop" id="drop-recon" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <p class="drop-label">Nome da script:</p>
+                        <p class="drop-value">recon_automation.sh</p>
+                      </div>
+                      <div class="drop-meta">
+                        <p class="drop-label">Autor:</p>
+                        <p class="drop-value">Ciel Sec</p>
+                      </div>
+                    </div>
+
+                    <p class="drop-label">Descrição:</p>
+                    <p class="drop-desc">Subdomínios → HTTP probe → Nuclei, salvando tudo em pasta por alvo.</p>
+
+                    <div class="drop-codebar">
+                      <span class="drop-label">Código:</span>
+                      <button class="btn btn-primary copy-btn" type="button" data-copy="#code-recon">Copiar</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-recon" data-template="tpl-recon"></code></pre>
+                  </div>
                 </div>
               </article>
 
-              <!-- Card 4 -->
-              <article class="project-card"
-                data-project-id="privesc"
-                data-title="privesc_pack.sh"
-                data-desc="Coleta informações do host e organiza a saída."
-                data-author="Ciel Sec"
-                data-src="code/privesc_pack.sh">
+              <!-- 4 -->
+              <article class="project-card" data-project="privesc">
                 <header class="project-head">
-                  <h3>privesc_pack.sh</h3>
-                  <p>Coleta informações do host e organiza a saída.</p>
+                  <h4>privesc_pack.sh</h4>
+                  <p>Coleta informações do host e organiza saída.</p>
                 </header>
+
                 <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
-                    Ler mais
-                  </button>
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="privesc">Ler mais</button>
+                </div>
+
+                <div class="project-drop" id="drop-privesc" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <p class="drop-label">Nome da script:</p>
+                        <p class="drop-value">privesc_pack.sh</p>
+                      </div>
+                      <div class="drop-meta">
+                        <p class="drop-label">Autor:</p>
+                        <p class="drop-value">Ciel Sec</p>
+                      </div>
+                    </div>
+
+                    <p class="drop-label">Descrição:</p>
+                    <p class="drop-desc">Coleta: sistema, processos e SUID/SGID em uma pasta com timestamp.</p>
+
+                    <div class="drop-codebar">
+                      <span class="drop-label">Código:</span>
+                      <button class="btn btn-primary copy-btn" type="button" data-copy="#code-privesc">Copiar</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-privesc" data-template="tpl-privesc"></code></pre>
+                  </div>
                 </div>
               </article>
 
-              <!-- Card 5 -->
-              <article class="project-card"
-                data-project-id="cielpl"
-                data-title="ciel.pl"
-                data-desc="Detecção e enumeração de WebDAV."
-                data-author="Ciel Sec"
-                data-src="code/ciel.pl">
+              <!-- 5 -->
+              <article class="project-card" data-project="cielpl">
                 <header class="project-head">
-                  <h3>ciel.pl</h3>
-                  <p>Detecção e enumeração de WebDAV.</p>
+                  <h4>ciel.pl</h4>
+                  <p>Detector/enumeração de WebDAV.</p>
                 </header>
+
                 <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
-                    Ler mais
-                  </button>
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="cielpl">Ler mais</button>
+                </div>
+
+                <div class="project-drop" id="drop-cielpl" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <p class="drop-label">Nome da script:</p>
+                        <p class="drop-value">ciel.pl</p>
+                      </div>
+                      <div class="drop-meta">
+                        <p class="drop-label">Autor:</p>
+                        <p class="drop-value">Ciel Sec</p>
+                      </div>
+                    </div>
+
+                    <p class="drop-label">Descrição:</p>
+                    <p class="drop-desc">Faz OPTIONS/headers e mostra indícios de WebDAV, com parsing de URL.</p>
+
+                    <div class="drop-codebar">
+                      <span class="drop-label">Código:</span>
+                      <button class="btn btn-primary copy-btn" type="button" data-copy="#code-cielpl">Copiar</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-cielpl" data-template="tpl-cielpl"></code></pre>
+
+                    <p class="drop-hint">
+                      Dica: se você quiser mostrar o arquivo completo sem entupir o HTML, dá pra trocar por fetch.
+                    </p>
+                  </div>
                 </div>
               </article>
-
             </div>
-
-            <footer class="site-footer" role="contentinfo">
-              <p>Programado por Ciel Sec</p>
-            </footer>
           </article>
         </div>
       </div>
-    </section>
 
+      <footer class="site-footer" role="contentinfo">
+        <p>Programado por Ciel Sec</p>
+      </footer>
+    </section>
   </main>
 
-  <!-- DROP MINI TELA (fica fora do fluxo e “cai” por cima) -->
-  <div class="drop-overlay" id="project-drop" aria-hidden="true">
-    <div class="drop-backdrop" data-drop-close aria-hidden="true"></div>
+  <!-- ===== templates de código (FICAM NO HTML) ===== -->
+  <template id="tpl-havijpy"><code>#!/usr/bin/env python3
+import sys, subprocess, threading
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QTextEdit, QLabel
 
-    <section class="drop-panel" role="dialog" aria-modal="true" aria-label="Detalhes do projeto" tabindex="-1">
-      <header class="drop-head">
-        <div class="drop-titlewrap">
-          <p class="eyebrow">Projeto</p>
-          <h3 class="drop-title" id="drop-title">—</h3>
-        </div>
+class App(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("HavijPy - SQLmap GUI")
+        self.proc = None
 
-        <button class="btn btn-ghost drop-close" type="button" data-drop-close aria-label="Fechar">
-          Fechar
-        </button>
-      </header>
+        self.url = QLineEdit()
+        self.url.setPlaceholderText("URL alvo (ex: https://site.com/item.php?id=1)")
+        self.args = QLineEdit()
+        self.args.setPlaceholderText("Args extras (ex: --dbs --batch)")
+        self.log = QTextEdit(); self.log.setReadOnly(True)
 
-      <div class="drop-body">
-        <div class="drop-info">
-          <p class="drop-desc" id="drop-desc">—</p>
+        run = QPushButton("Rodar"); stop = QPushButton("Parar")
+        run.clicked.connect(self.run_sqlmap); stop.clicked.connect(self.stop_sqlmap)
 
-          <div class="drop-meta">
-            <span class="drop-chip"><strong>Autor:</strong> <span id="drop-author">—</span></span>
-            <span class="drop-chip"><strong>Arquivo:</strong> <span id="drop-file">—</span></span>
-          </div>
+        top = QHBoxLayout(); top.addWidget(QLabel("URL:")); top.addWidget(self.url)
+        mid = QHBoxLayout(); mid.addWidget(QLabel("Args:")); mid.addWidget(self.args)
 
-          <div class="drop-actions">
-            <button class="btn btn-primary copy-btn" type="button" data-copy-target="drop-code">
-              Copiar
-            </button>
-          </div>
-        </div>
+        btns = QHBoxLayout(); btns.addWidget(run); btns.addWidget(stop)
 
-        <!-- Code viewer (JS troca o data-src e carrega o arquivo) -->
-        <pre class="code-block drop-code" id="drop-code" data-src=""><code>Selecione “Ler mais” em um projeto.</code></pre>
-      </div>
-    </section>
-  </div>
+        layout = QVBoxLayout(self)
+        layout.addLayout(top); layout.addLayout(mid); layout.addLayout(btns); layout.addWidget(self.log)
 
-  <!-- Toast (mensagem rápida tipo “Copiado.”) -->
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    def run_sqlmap(self):
+        if self.proc: return
+        u = self.url.text().strip()
+        extra = self.args.text().strip().split() if self.args.text().strip() else []
+        if not u:
+            self.log.append("[-] Informe uma URL.")
+            return
+        cmd = ["sqlmap", "-u", u, "--batch"] + extra
+        self.log.append("[*] " + " ".join(cmd))
+        self.proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+
+        def reader():
+            for line in self.proc.stdout:
+                self.log.append(line.rstrip())
+            code = self.proc.wait()
+            self.log.append(f"[+] Finalizado (exit={code})")
+            self.proc = None
+
+        threading.Thread(target=reader, daemon=True).start()
+
+    def stop_sqlmap(self):
+        if self.proc:
+            self.proc.terminate()
+            self.log.append("[*] Processo finalizado.")
+            self.proc = None
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    w = App(); w.resize(900, 520); w.show()
+    sys.exit(app.exec())</code></template>
+
+  <template id="tpl-pentestcentral"><code>#!/usr/bin/env python3
+import subprocess, datetime, pathlib
+
+BASE = pathlib.Path("logs")
+BASE.mkdir(exist_ok=True)
+
+def run(name, cmd):
+    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    out = BASE / f"{name}_{ts}.log"
+    print(f"[+] {name} -> {out}")
+    with out.open("w", encoding="utf-8") as f:
+        p = subprocess.Popen(cmd, stdout=f, stderr=subprocess.STDOUT, text=True)
+        return p.wait()
+
+def main():
+    print("1) Nmap\\n2) Ffuf\\n3) Nuclei")
+    opt = input("> ").strip()
+    if opt == "1":
+        target = input("Alvo: ").strip()
+        return run("nmap", ["nmap", "-sV", "-sC", "-Pn", target])
+    if opt == "2":
+        url = input("URL (com FUZZ): ").strip()
+        word = input("Wordlist: ").strip()
+        return run("ffuf", ["ffuf", "-u", url, "-w", word, "-mc", "all", "-fc", "404"])
+    if opt == "3":
+        target = input("Alvo: ").strip()
+        return run("nuclei", ["nuclei", "-u", target])
+    print("[-] Opção inválida.")
+    return 1
+
+if __name__ == "__main__":
+    raise SystemExit(main())</code></template>
+
+  <template id="tpl-recon"><code>#!/usr/bin/env bash
+set -euo pipefail
+
+TARGET="${1:-}"
+OUT="recon_out_${TARGET:-target}_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$OUT"
+
+if [[ -z "$TARGET" ]]; then
+  echo "Uso: $0 dominio.com"
+  exit 1
+fi
+
+echo "[*] Subdomains"
+subfinder -d "$TARGET" -silent | tee "$OUT/subs.txt" >/dev/null
+
+echo "[*] HTTP probe"
+httpx -l "$OUT/subs.txt" -silent -o "$OUT/live.txt"
+
+echo "[*] Nuclei"
+nuclei -l "$OUT/live.txt" -silent -o "$OUT/nuclei.txt"
+
+echo "[+] Saída em: $OUT/"</code></template>
+
+  <template id="tpl-privesc"><code>#!/usr/bin/env bash
+set -euo pipefail
+
+OUT="privesc_out_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$OUT"
+
+echo "[*] Sistema" | tee "$OUT/info.txt"
+uname -a | tee -a "$OUT/info.txt"
+id | tee -a "$OUT/info.txt"
+whoami | tee -a "$OUT/info.txt"
+
+echo "[*] Processos" > "$OUT/ps.txt"
+ps auxww > "$OUT/ps.txt"
+
+echo "[*] SUID/SGID (pode demorar)"
+find / -perm -4000 -type f 2>/dev/null > "$OUT/suid.txt"
+find / -perm -2000 -type f 2>/dev/null > "$OUT/sgid.txt"
+
+echo "[+] Saída em: $OUT/"</code></template>
+
+  <!-- (ciel.pl) versão curta aqui — você pode substituir pelo conteúdo completo se quiser -->
+  <template id="tpl-cielpl"><code>#!/usr/bin/perl
+use strict;
+use warnings;
+use IO::Socket::INET;
+use IO::Socket::SSL;
+
+binmode(STDOUT, ":utf8");
+
+sub parse_url {
+  my ($url) = @_;
+  if ($url =~ m{^(https?)://([^:/]+)(?::(\\d+))?(/.*)?$}i) {
+    my $scheme = lc($1);
+    my $host   = $2;
+    my $port   = $3 || ($scheme eq 'https' ? 443 : 80);
+    my $path   = $4 || '/';
+    my $ssl    = ($scheme eq 'https') ? 1 : 0;
+    $path .= '/' unless $path =~ /\\/$/ || $path =~ /\\.[a-z]+$/i;
+    return ($host, $port, $path, $ssl);
+  }
+  return ();
+}
+
+sub create_socket {
+  my ($host,$port,$ssl,$timeout) = @_;
+  $timeout ||= 10;
+  if ($ssl) {
+    return IO::Socket::SSL->new(PeerHost=>$host, PeerPort=>$port, Timeout=>$timeout, SSL_verify_mode=>0);
+  }
+  return IO::Socket::INET->new(PeerHost=>$host, PeerPort=>$port, Timeout=>$timeout);
+}
+
+sub detect_webdav {
+  my ($host,$port,$path,$ssl) = @_;
+  print \"[+] OPTIONS para detectar WebDAV...\\n\";
+  my $sock = create_socket($host,$port,$ssl,10) or die \"Falha ao conectar\\n\";
+  my $req = \"OPTIONS $path HTTP/1.1\\r\\nHost: $host\\r\\nConnection: close\\r\\n\\r\\n\";
+  print $sock $req;
+
+  my $res = \"\";
+  while (<$sock>) { $res .= $_; }
+  close($sock);
+
+  my ($allow) = ($res =~ /Allow:\\s*([^\\r\\n]+)/i);
+  my ($dav)   = ($res =~ /DAV:\\s*([^\\r\\n]+)/i);
+
+  print \"Allow: \" . ($allow // \"n/d\") . \"\\n\";
+  print \"DAV  : \" . ($dav   // \"n/d\") . \"\\n\";
+}
+
+@ARGV >= 1 or die \"Uso: perl ciel.pl <URL>\\n\";
+my ($host,$port,$path,$ssl) = parse_url($ARGV[0]);
+detect_webdav($host,$port,$path,$ssl);</code></template>
 </body>
 </html>

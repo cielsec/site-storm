@@ -6,57 +6,44 @@
   const enterBtn = document.getElementById("enter-btn");
 
   const linesEl = document.getElementById("boot-lines");
-  const currentEl = document.getElementById("boot-current");
-  const actionsEl = document.getElementById("hero-actions");
-
-  const hubButtons = document.querySelectorAll(".hub-btn");
-  const hubPanels = document.querySelectorAll(".hub-panel");
+  const actions = document.getElementById("hero-actions");
 
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorRing = document.querySelector(".cursor-ring");
 
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-  // ===== Scroll var (parallax) =====
-  let scrollTicking = false;
+  // Parallax var
   const setScrollVar = () => {
-    if (scrollTicking) return;
-    scrollTicking = true;
-    requestAnimationFrame(() => {
-      document.documentElement.style.setProperty("--scroll", `${window.scrollY}px`);
-      scrollTicking = false;
-    });
+    document.documentElement.style.setProperty("--scroll", `${window.scrollY}px`);
   };
-  window.addEventListener("scroll", setScrollVar, { passive: true });
-  window.addEventListener("load", setScrollVar);
 
-  // ===== Cursor custom (sem duplicação) =====
+  // Cursor custom
   const initCursor = () => {
     if (!cursorDot || !cursorRing) return;
 
     let mx = 0, my = 0, rx = 0, ry = 0;
 
-    const onMove = (e) => {
-      mx = e.clientX; my = e.clientY;
-      cursorDot.style.left = `${mx}px`;
-      cursorDot.style.top = `${my}px`;
-      body.classList.remove("cursor-hidden");
-    };
-
     const tick = () => {
-      rx += (mx - rx) * 0.16;
-      ry += (my - ry) * 0.16;
-      cursorRing.style.left = `${rx}px`;
-      cursorRing.style.top = `${ry}px`;
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      cursorRing.style.left = rx + "px";
+      cursorRing.style.top = ry + "px";
       requestAnimationFrame(tick);
     };
 
-    document.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", (e) => {
+      mx = e.clientX; my = e.clientY;
+      cursorDot.style.left = mx + "px";
+      cursorDot.style.top = my + "px";
+      body.classList.remove("cursor-hidden");
+    });
+
     document.addEventListener("mouseleave", () => body.classList.add("cursor-hidden"));
     document.addEventListener("mouseenter", () => body.classList.remove("cursor-hidden"));
 
     document.addEventListener("mouseover", (e) => {
-      if (e.target.closest("button, a, summary")) body.classList.add("cursor-hover");
+      if (e.target.closest("button,a,summary")) body.classList.add("cursor-hover");
     });
     document.addEventListener("mouseout", () => body.classList.remove("cursor-hover"));
 
@@ -67,164 +54,92 @@
     tick();
   };
 
-  // ===== Tabs =====
-  const activatePanel = (target) => {
-    hubButtons.forEach(btn => {
-      const on = btn.dataset.panel === target;
-      btn.classList.toggle("is-active", on);
-      btn.setAttribute("aria-selected", on ? "true" : "false");
-    });
+  // ===== BOOT terminal (digitando) =====
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[c]));
 
-    hubPanels.forEach(panel => {
-      const on = panel.dataset.panelId === target;
-      panel.classList.toggle("is-active", on);
-      panel.hidden = !on;
-    });
-  };
+  const span = (cls, text) => `<span class="${cls}">${esc(text)}</span>`;
 
-  hubButtons.forEach(btn => {
-    btn.addEventListener("click", () => activatePanel(btn.dataset.panel));
-  });
-
-  // ===== Projects: texto Mostrar/Ocultar =====
-  document.querySelectorAll("details.project-details").forEach(det => {
-    const sum = det.querySelector("[data-summary]");
-    if (!sum) return;
-    det.addEventListener("toggle", () => {
-      sum.textContent = det.open ? "Ocultar" : "Mostrar";
-    });
-  });
-
-  // ===== Terminal Boot (com estilos) =====
-  const seg = (text, cls) => ({ text, cls });
-
-  const boot = [
-    // prompt + comando
-    { parts: [
-      seg("┌──(", "term-dim"),
-      seg("ciel", "term-user"),
-      seg("㉿", "term-dim"),
-      seg("kali", "term-host"),
-      seg(")-[~]", "term-dim"),
-    ], nl: true, wait: 160 },
-    { parts: [
-      seg("└─$ ", "term-prompt"),
-      seg("whoami", "term-cmd"),
-    ], nl: false, wait: 240 },
-    { parts: [ seg("ciel", "term-ok") ], nl: true, wait: 220 },
-
-    { parts: [ seg("└─$ ", "term-prompt"), seg('echo "conhecimento é poder"', "term-cmd") ], nl: false, wait: 220 },
-    { parts: [ seg("conhecimento é poder", "term-dim") ], nl: true, wait: 200 },
-
-    { parts: [ seg("└─$ ", "term-prompt"), seg('echo "disciplina > ego"', "term-cmd") ], nl: false, wait: 220 },
-    { parts: [ seg("disciplina > ego", "term-dim") ], nl: true, wait: 200 },
-
-    { parts: [ seg("└─$ ", "term-prompt"), seg('echo "silêncio. precisão. controle."', "term-cmd") ], nl: false, wait: 220 },
-    { parts: [ seg("silêncio. precisão. controle.", "term-dim") ], nl: true, wait: 210 },
-
-    { parts: [ seg("└─$ ", "term-prompt"), seg("init --modules panel projects tools", "term-cmd") ], nl: false, wait: 260 },
-    { parts: [ seg("[OK] ", "term-ok"), seg("carregando módulos...", "term-dim") ], nl: true, wait: 180 },
-    { parts: [ seg("[OK] ", "term-ok"), seg("preparando interface...", "term-dim") ], nl: true, wait: 180 },
-    { parts: [ seg("[OK] ", "term-ok"), seg("pronto.", "term-dim") ], nl: true, wait: 180 },
+  const bootLines = [
+    `${span("term-user","┌──(ciel)")}㉿${span("term-host","kali")}${span("term-user",")-[~]")}\n${span("term-user","└─$")} ${span("cmd","whoami")}`,
+    `${span("term-ok","ciel")}`,
+    `${span("term-user","└─$")} ${span("cmd","echo \"conhecimento é poder\"")}`,
+    `${span("term-dim","conhecimento é poder")}`,
+    `${span("term-user","└─$")} ${span("cmd","echo \"disciplina > ego\"")}`,
+    `${span("term-dim","disciplina > ego")}`,
+    `${span("term-user","└─$")} ${span("cmd","echo \"método vence sorte\"")}`,
+    `${span("term-dim","método vence sorte")}`,
+    `${span("term-user","└─$")} ${span("cmd","init --modules panel projects tools")}`,
+    `${span("term-ok","[OK]")} ${span("term-dim","carregando módulos...")}`,
+    `${span("term-ok","[OK]")} ${span("term-dim","preparando interface...")}`,
+    `${span("term-ok","[OK]")} ${span("term-dim","pronto.")}`,
   ];
 
-  const escapeHtml = (s) =>
-    s.replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[c]));
-
-  const renderParts = (parts) => {
-    return parts.map(p => `<span class="${p.cls}">${escapeHtml(p.text)}</span>`).join("");
-  };
-
-  async function typeParts(parts, speed = 10) {
-    if (!currentEl) return;
-
-    // Digita char por char, mantendo classes por bloco
-    let html = "";
-    for (const p of parts) {
-      const text = p.text;
-      for (let i = 0; i < text.length; i++) {
-        const partial = escapeHtml(text.slice(0, i + 1));
-        const doneBefore = html;
-        const thisSpan = `<span class="${p.cls}">${partial}</span>`;
-        currentEl.innerHTML = doneBefore + thisSpan + `<span class="cursor" aria-hidden="true"></span>`;
-        await sleep(speed);
-      }
-      html += `<span class="${p.cls}">${escapeHtml(text)}</span>`;
-    }
-    currentEl.innerHTML = html + `<span class="cursor" aria-hidden="true"></span>`;
-  }
-
-  function commitCurrentLine() {
-    if (!linesEl || !currentEl) return;
+  async function typeLine(html, speed = 10) {
     const line = document.createElement("div");
     line.className = "term-line";
-    // remove cursor da cópia
-    const clone = currentEl.cloneNode(true);
-    const cur = clone.querySelector(".cursor");
-    if (cur) cur.remove();
-    line.innerHTML = clone.innerHTML.trim();
     linesEl.appendChild(line);
+
+    const plain = html.replace(/<[^>]+>/g, "");
+    let out = "";
+
+    for (let i = 0; i < plain.length; i++) {
+      out += plain[i];
+      line.textContent = out;
+      await sleep(speed);
+    }
+
+    line.innerHTML = html;
     linesEl.scrollTop = linesEl.scrollHeight;
-    // limpa linha atual
-    currentEl.innerHTML = `<span class="cursor" aria-hidden="true"></span>`;
   }
 
-  async function runBoot() {
-    if (!linesEl || !currentEl) return;
+  async function boot() {
+    if (!linesEl) return;
 
-    // reset terminal
     linesEl.innerHTML = "";
-    currentEl.innerHTML = `<span class="cursor" aria-hidden="true"></span>`;
-
-    // esconde botão até final
-    if (actionsEl) {
-      actionsEl.classList.add("hero-actions-hidden");
-      actionsEl.classList.remove("hero-actions-visible");
+    if (actions) {
+      actions.classList.add("hero-actions-hidden");
+      actions.classList.remove("hero-actions-visible");
     }
 
     await sleep(220);
 
-    for (const step of boot) {
-      await typeParts(step.parts, 10);
-      commitCurrentLine();
-      if (step.nl) {
-        // quebra visual (já commitou)
-      }
-      await sleep(step.wait);
+    for (const l of bootLines) {
+      await typeLine(l, 9);
+      await sleep(220);
     }
 
-    // mostra botão
-    if (actionsEl) {
-      actionsEl.classList.remove("hero-actions-hidden");
-      actionsEl.classList.add("hero-actions-visible");
+    await sleep(200);
+
+    if (actions) {
+      actions.classList.remove("hero-actions-hidden");
+      actions.classList.add("hero-actions-visible");
     }
   }
 
-  // ===== Transição de tela =====
-  const goHub = () => {
-    if (!hero || !hub) return;
-    if (hero.classList.contains("is-exiting")) return;
-
+  // ===== Troca de tela (wipe/scan) =====
+  function showHub() {
     body.classList.add("is-wiping");
-    hero.classList.add("is-exiting");
-    hero.setAttribute("aria-hidden", "true");
 
     setTimeout(() => {
-      hero.classList.remove("is-active", "is-exiting");
+      hero.classList.add("is-exiting");
+      hero.setAttribute("aria-hidden", "true");
 
-      hub.classList.add("is-active");
-      hub.setAttribute("aria-hidden", "false");
-      hub.focus?.();
+      setTimeout(() => {
+        hero.classList.remove("is-active", "is-exiting");
 
-      body.classList.remove("is-wiping");
-    }, 520);
-  };
+        hub.classList.add("is-active");
+        hub.setAttribute("aria-hidden", "false");
+        hub.focus?.();
 
-  const goHero = () => {
-    if (!hero || !hub) return;
+        body.classList.remove("is-wiping");
+      }, 420);
+    }, 80);
+  }
 
+  function showHero() {
     body.classList.add("is-wiping");
-
     setTimeout(() => {
       hub.classList.remove("is-active");
       hub.setAttribute("aria-hidden", "true");
@@ -233,19 +148,115 @@
       hero.setAttribute("aria-hidden", "false");
 
       body.classList.remove("is-wiping");
+      boot();
+    }, 320);
+  }
 
-      runBoot();
-    }, 420);
+  // ===== Tabs =====
+  function activatePanel(panel) {
+    document.querySelectorAll(".hub-btn").forEach((b) => {
+      const on = b.dataset.panel === panel;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-selected", on ? "true" : "false");
+    });
+
+    document.querySelectorAll(".hub-panel").forEach((p) => {
+      const on = p.dataset.panelId === panel;
+      p.classList.toggle("is-active", on);
+      p.hidden = !on;
+    });
+  }
+
+  // ===== Projetos: drop + copiar =====
+  const loadCodeFromTemplate = (codeEl) => {
+    const tplId = codeEl?.dataset?.template;
+    if (!tplId) return;
+    const tpl = document.getElementById(tplId);
+    if (!tpl) return;
+    const inner = tpl.content.querySelector("code");
+    if (!inner) return;
+    codeEl.textContent = inner.textContent || "";
   };
 
-  enterBtn?.addEventListener("click", goHub);
+  function closeAllDrops(exceptKey = null) {
+    document.querySelectorAll(".project-card").forEach((card) => {
+      const key = card.dataset.project;
+      if (exceptKey && key === exceptKey) return;
+      card.classList.remove("is-open");
+      const drop = card.querySelector(".project-drop");
+      if (drop) drop.setAttribute("aria-hidden", "true");
+    });
+  }
+
+  function toggleDrop(key) {
+    const card = document.querySelector(`.project-card[data-project="${key}"]`);
+    if (!card) return;
+
+    const drop = document.getElementById(`drop-${key}`);
+    if (!drop) return;
+
+    const opening = !card.classList.contains("is-open");
+    closeAllDrops(opening ? key : null);
+
+    card.classList.toggle("is-open", opening);
+    drop.setAttribute("aria-hidden", opening ? "false" : "true");
+
+    if (opening) {
+      const codeEl = drop.querySelector("code[data-template]");
+      if (codeEl && !codeEl.dataset.loaded) {
+        loadCodeFromTemplate(codeEl);
+        codeEl.dataset.loaded = "1";
+      }
+      drop.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+
+  async function copyFromSelector(sel, btn) {
+    const el = document.querySelector(sel);
+    if (!el) return;
+
+    const text = el.textContent || "";
+    try {
+      await navigator.clipboard.writeText(text);
+      const old = btn.textContent;
+      btn.textContent = "COPIADO ✓";
+      setTimeout(() => (btn.textContent = old), 1100);
+    } catch {
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      const old = btn.textContent;
+      btn.textContent = "COPIADO ✓";
+      setTimeout(() => (btn.textContent = old), 1100);
+    }
+  }
+
+  // ===== Eventos =====
+  window.addEventListener("scroll", setScrollVar, { passive: true });
+  window.addEventListener("load", () => {
+    setScrollVar();
+    boot();
+  });
+
+  initCursor();
+
+  enterBtn?.addEventListener("click", showHub);
 
   document.addEventListener("click", (e) => {
     const back = e.target.closest?.('[data-action="back"]');
-    if (back) goHero();
-  });
+    if (back) showHero();
 
-  // ===== Init =====
-  initCursor();
-  window.addEventListener("load", runBoot);
+    const tab = e.target.closest?.(".hub-btn");
+    if (tab) activatePanel(tab.dataset.panel);
+
+    const more = e.target.closest?.(".project-more");
+    if (more) toggleDrop(more.dataset.projectOpen);
+
+    const copy = e.target.closest?.(".copy-btn");
+    if (copy) copyFromSelector(copy.dataset.copy, copy);
+  });
 })();

@@ -464,3 +464,186 @@ body.cursor-hidden .cursor-ring{opacity:0}
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important;transition:none !important}
 }
+/* ===== HERO TERMINAL (refeito) ===== */
+.hero-terminal{
+  max-width: 900px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.terminal-window{
+  border: 1px solid rgba(0,255,153,.22);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0,0,0,.28);
+  box-shadow:
+    0 0 24px rgba(0,255,153,.20),
+    inset 0 0 40px rgba(0,255,153,.08);
+  backdrop-filter: blur(10px);
+}
+
+.terminal-bar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 10px 12px;
+  background: rgba(0,0,0,.42);
+  border-bottom: 1px solid rgba(0,255,153,.18);
+}
+
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.red{background:#ff4d4d}
+.dot.yellow{background:#ffd24d}
+.dot.green{background:#4dff88}
+
+.terminal-title{
+  margin-left: 8px;
+  font-family:"Share Tech Mono", monospace;
+  font-size:.82rem;
+  color: rgba(228,241,236,.65);
+  letter-spacing:.06rem;
+}
+
+.terminal-body{
+  position: relative;
+  padding: 18px 18px 14px;
+  font-family:"Share Tech Mono", monospace;
+  min-height: 340px;
+  color: rgba(228,241,236,.88);
+}
+
+.terminal-body::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(circle at 30% 0%, rgba(0,255,153,.12), transparent 55%),
+    radial-gradient(circle at 90% 30%, rgba(0,255,153,.08), transparent 50%);
+  pointer-events:none;
+}
+
+.terminal-watermark{
+  position:absolute;
+  inset: 0;
+  display:grid;
+  place-items:center;
+  opacity:.07;
+  filter: blur(.2px);
+  pointer-events:none;
+}
+
+.terminal-watermark svg{
+  width: 340px;
+  height: 340px;
+  stroke: rgba(0,255,153,.9);
+  fill: transparent;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 12px rgba(0,255,153,.35));
+}
+
+.terminal-lines{
+  position: relative;
+  z-index: 1;
+  line-height: 1.55;
+  font-size: .92rem;
+  padding-bottom: 14px;
+}
+
+.term-line{
+  display:block;
+  white-space: pre-wrap;
+  margin-bottom: 6px;
+  opacity: .98;
+}
+
+.term-dim{ color: rgba(154,169,164,.88); }
+.term-ok{ color: rgba(0,255,153,.92); }
+.term-warn{ color: rgba(255,210,77,.92); }
+
+.term-prompt{ color: rgba(0,255,153,.78); }
+.term-user{ color: rgba(228,241,236,.92); }
+.term-host{ color: rgba(0,255,153,.92); }
+
+.terminal-footer{
+  position: relative;
+  z-index: 1;
+  height: 18px;
+}
+
+.cursor{
+  display:inline-block;
+  width: 10px;
+  height: 1.1em;
+  border-right: 2px solid rgba(0,255,153,.95);
+  transform: translateY(3px);
+  animation: blink .85s steps(1) infinite;
+  opacity: .9;
+}
+
+.hero-actions-hidden{
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .35s ease, transform .35s ease;
+  margin-top: 18px;
+  display:flex;
+  justify-content:center;
+}
+
+.hero-actions-visible{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Ajusta título (se você quiser tirar o grandão da tela inicial) */
+.hero-screen .hero-title{ display:none; }
+.hero-screen .hero-sub{ display:none; }
+.hero-screen .hero-line{ display:none; }
+
+/* ===== Transição diferente (wipe/scan) ===== */
+.transition-wipe{
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events:none;
+  opacity: 0;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      rgba(0,255,153,.08) 35%,
+      rgba(0,255,153,.18) 50%,
+      rgba(0,255,153,.08) 65%,
+      transparent 100%),
+    radial-gradient(circle at 50% 50%, rgba(0,255,153,.10), transparent 55%);
+  transform: translateX(-120%);
+  filter: blur(6px) saturate(1.15);
+}
+
+body.is-wiping .transition-wipe{
+  opacity: 1;
+  animation: wipe 650ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+body.is-wiping .shell{
+  filter: blur(3px);
+}
+
+@keyframes wipe{
+  0%   { transform: translateX(-120%); }
+  70%  { transform: translateX(0%); }
+  100% { transform: translateX(120%); }
+}
+
+@keyframes blink{
+  50%{ opacity:0; }
+}
+
+@media (max-width: 680px){
+  .terminal-body{ min-height: 320px; padding: 16px; }
+  .terminal-watermark svg{ width: 260px; height: 260px; }
+  .terminal-lines{ font-size: .88rem; }
+}
+

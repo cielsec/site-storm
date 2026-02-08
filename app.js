@@ -260,3 +260,66 @@
     if (copy) copyFromSelector(copy.dataset.copy, copy);
   });
 })();
+      // ===== DSTAT L7 =====
+      const dstatImg = document.getElementById("dstat-img");
+      const dstatUrlEl = document.getElementById("dstat-url");
+      const dstatStatus = document.getElementById("dstat-status");
+      const dstatRefresh = document.getElementById("dstat-refresh");
+      const dstatOpen = document.getElementById("dstat-open");
+
+      const setDstatStatus = (t, c) => {
+        if(!dstatStatus) return;
+        dstatStatus.textContent = t;
+        dstatStatus.style.color =
+          c === "ok" ? "rgba(0,255,153,.85)" :
+          c === "bad" ? "rgba(255,77,77,.90)" :
+          c === "warn" ? "rgba(255,210,77,.95)" :
+          "rgba(0,255,153,.75)";
+      };
+
+      const buildDstatUrl = (ipOrHost) => {
+        // endpoint original que você passou:
+        // https://www.vedbex.com/tools/ajax/dstat/L7/graph?ip=91.212.155.101&title=false
+        const ip = encodeURIComponent(ipOrHost);
+        return `https://www.vedbex.com/tools/ajax/dstat/L7/graph?ip=${ip}&title=false`;
+      };
+
+      const loadDstat = () => {
+        const host = (hostEl?.value || "").trim();
+        if(!host){
+          setDstatStatus("SEM HOST", "bad");
+          if(dstatUrlEl) dstatUrlEl.textContent = "Informe um host/IP na aba Central.";
+          if(dstatImg) dstatImg.removeAttribute("src");
+          return;
+        }
+
+        const url = buildDstatUrl(host);
+        if(dstatUrlEl) dstatUrlEl.textContent = url;
+
+        // Cache-buster pra forçar reload
+        const bust = (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+
+        setDstatStatus("LOADING", "warn");
+        if(dstatImg){
+          dstatImg.onload = () => setDstatStatus("OK", "ok");
+          dstatImg.onerror = () => {
+            setDstatStatus("FAIL", "bad");
+          };
+          dstatImg.src = url + bust;
+        }
+      };
+
+      dstatRefresh?.addEventListener("click", loadDstat);
+      dstatOpen?.addEventListener("click", () => {
+        const host = (hostEl?.value || "").trim();
+        if(!host) return;
+        window.open(buildDstatUrl(host), "_blank", "noopener,noreferrer");
+      });
+
+      // Auto: quando sair digitando host, atualiza depois de um tempinho
+      let dstatDebounce;
+      hostEl?.addEventListener("input", () => {
+        clearTimeout(dstatDebounce);
+        dstatDebounce = setTimeout(loadDstat, 450);
+      });
+
